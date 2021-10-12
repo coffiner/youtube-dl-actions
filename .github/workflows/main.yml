@@ -1,0 +1,22 @@
+name: VideoDownloader
+on: push
+jobs:
+  AutoDownloaderProcess:
+    runs-on: windows-latest
+    steps:
+    - name: youtube-dl Install
+      shell: cmd
+      run: |
+       mkdir D:\VideoDL
+       cd /d D:\VideoDL
+       curl https://github.com/ytdl-org/youtube-dl/releases/download/2021.01.24.1/youtube-dl.exe -o D:\youtube-dl.exe -L
+    - name: Video Download
+      shell: cmd
+      run: |
+        cd /d D:\VideoDL
+        ..\youtube-dl.exe  https://www.youtube.com/playlist?list=PLwXMmy5fUrVwWPIPrKCdPNuq6pUUE6qai
+    - name : Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: Video
+        path: D:\VideoDL
